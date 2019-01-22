@@ -1,6 +1,5 @@
 # HEX4J
 A library written to simplify hexadecimal manipulation in Java(8).
-Examples:
 ## 1.CONVERTING (From & To):
 	System.out.println("HEX From BYTE: " + HEX4J.Hexadecimal.From.Byte((byte) 'ï'));
 	System.out.println("HEX To BYTE: " + (char) HEX4J.Hexadecimal.To.Byte("0xef"));
