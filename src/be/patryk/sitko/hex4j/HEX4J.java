@@ -574,6 +574,8 @@ public interface HEX4J {
 
     public class Private {
 
+     private Private(){}
+     
         public static String checkIntegrity(String hexValue) {
             hexValue = hexValue.replaceAll("0x", "").replaceAll("0X", "").replaceAll(" ", "");
             while (hexValue.length() % 2 != 0) {
