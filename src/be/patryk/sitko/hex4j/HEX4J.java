@@ -195,7 +195,7 @@ public interface HEX4J {
         System.out.println("HEX From CHAR: " + Hexadecimal.From.Char('ï'));
         System.out.println("HEX to CHAR: " + Hexadecimal.To.Char("0xef"));
         System.out.println("HEX From CHAR-ARRAY: " + Hexadecimal.From.CharArray(new char[]{'P', 'a', 't', 'r', 'y', 'k', ' ', 'S', 'i', 't', 'k', 'o'}));
-        System.out.println("HEX to CHAR-ARRAY: " + new String(Hexadecimal.To.CharArray("0x070006")));
+        System.out.println("HEX to CHAR-ARRAY: " + new String(Hexadecimal.To.CharArray("0x50617472796B205369746B6F")));
         System.out.println("HEX From SHORT: " + Hexadecimal.From.Short((short) 12));
         System.out.println("HEX to SHORT: " + Hexadecimal.To.Short("0x0f"));
         System.out.println("HEX From INT: " + Hexadecimal.From.Int(Integer.MAX_VALUE));
