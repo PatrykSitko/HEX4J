@@ -185,7 +185,8 @@ import javax.xml.bind.DatatypeConverter;
  * @author Patryk Sitko
  */
 public interface HEX4J {
-/*
+
+    /*
     public static void main(String[] args) {
         System.out.println("HEX From BYTE: " + Hexadecimal.From.Byte((byte) 'ï'));
         System.out.println("HEX To BYTE: " + (char) Hexadecimal.To.Byte("0xef"));
@@ -214,7 +215,7 @@ public interface HEX4J {
         System.out.println("HEX From DOUBLE-SIGNED : " + Hexadecimal.From.Double(-0.1d));
         System.out.println("HEX to DOUBLE-SIGNED : " + Hexadecimal.To.Double("0xBFB999999999999A"));
     }
-*/
+     */
     /**
      *
      * @author Patryk Sitko
@@ -238,7 +239,7 @@ public interface HEX4J {
              */
             public static String Byte(byte b) {
                 char[] array = {Hexadecimal.DIGITS[(b >> 4) & 0x0f], Hexadecimal.DIGITS[b & 0x0f]};
-                return new String(array).toUpperCase();
+                return HEX4J.Private.checkIntegrity(new String(array).toUpperCase());
             }
 
             /**
@@ -344,11 +345,7 @@ public interface HEX4J {
              * @author Patryk Sitko
              */
             public static byte Byte(String hexValue) {
-                hexValue = hexValue.replaceAll("0x", "").replaceAll("0X", "").replaceAll(" ", "");
-                while (hexValue.length() % 2 != 0) {
-                    hexValue = "0".concat(hexValue);
-                }
-                return DatatypeConverter.parseHexBinary(hexValue)[0];
+                return DatatypeConverter.parseHexBinary(HEX4J.Private.checkIntegrity(hexValue))[0];
             }
 
             /**
@@ -358,7 +355,7 @@ public interface HEX4J {
              * @return true if hexValue equals : 01 (/or 1); else return false;
              */
             public static boolean Boolean(String hexValue) {
-                return hexValue.equals("01") || hexValue.equals("1");
+                return Int(hexValue) == 1;
             }
 
             /**
@@ -376,7 +373,7 @@ public interface HEX4J {
              * @author Patryk Sitko
              */
             public static char[] CharArray(String hexValue) {
-                hexValue = hexValue.replaceAll("0x", "").replaceAll("0X", "").replaceAll(" ", "");
+                hexValue = HEX4J.Private.checkIntegrity(hexValue);
                 char[] chars = new char[hexValue.length() / 2];
                 for (int x = 0, current = 0; x < hexValue.length(); x += 2, current++) {
                     chars[current] = Char(hexValue.substring(x, x + 2));
@@ -398,7 +395,7 @@ public interface HEX4J {
              * @return
              */
             public static short Short(String hexValue) {
-                hexValue = hexValue.replaceAll("0x", "").replaceAll("0X", "").replaceAll(" ", "");
+                hexValue = HEX4J.Private.checkIntegrity(hexValue);
                 return Short.decode("0x".concat(hexValue));
             }
 
@@ -408,7 +405,7 @@ public interface HEX4J {
              * @return
              */
             public static int Int(String hexValue) {
-                hexValue = hexValue.replaceAll("0x", "").replaceAll("0X", "").replaceAll(" ", "");
+                hexValue = HEX4J.Private.checkIntegrity(hexValue);
                 return Integer.parseUnsignedInt(hexValue, 16);
             }
 
@@ -418,7 +415,7 @@ public interface HEX4J {
              * @return
              */
             public static long Long(String hexValue) {
-                hexValue = hexValue.replaceAll("0x", "").replaceAll("0X", "").replaceAll(" ", "");
+                hexValue = HEX4J.Private.checkIntegrity(hexValue);
                 return Long.parseUnsignedLong(hexValue, 16);
             }
 
@@ -516,7 +513,7 @@ public interface HEX4J {
                     file.createNewFile();
                 }
                 ArrayList<String> hexadecimalValues = new ArrayList();
-                hexadecimalString = hexadecimalString.replaceAll(" ", "");
+                hexadecimalString = HEX4J.Private.checkIntegrity(hexadecimalString);
                 for (int x = 0; x < hexadecimalString.length(); x += 2) {
                     hexadecimalValues.add(hexadecimalString.substring(x, x + 2));
                 }
@@ -535,13 +532,15 @@ public interface HEX4J {
          * @author Patryk Sitko
          */
         public static boolean writeHumanReadableFormat(String hexadecimalString, File file) {
+            // TODO: Fix exception if hexes are not in pair. 
+            // TODO: Fix not printing chars if count % 16 != 0.
             Hexadecimal.Counter hexCounter = new Hexadecimal.Counter();
             try ( java.io.FileWriter writer = new java.io.FileWriter(file)) {
                 if (!file.exists()) {
                     file.createNewFile();
                 }
                 ArrayList<String> hexadecimalValues = new ArrayList();
-                hexadecimalString = hexadecimalString.replaceAll(" ", "");
+                hexadecimalString = HEX4J.Private.checkIntegrity(hexadecimalString);
                 for (int x = 0; x < hexadecimalString.length(); x += 2) {
                     hexadecimalValues.add(hexadecimalString.substring(x, x + 2));
                 }
@@ -551,7 +550,7 @@ public interface HEX4J {
                 for (String hexadecimal : hexadecimalValues) {
                     writer.write(hexadecimal.concat(" "));
                     chars.add(Hexadecimal.To.Char(hexadecimal));
-                    if (++count % 16 == 0) {
+                    if (++count % 16 == 0 || count >= hexadecimalValues.size()) {
                         writer.write("\t");
                         for (Character c : chars) {
                             int index = c;
@@ -570,6 +569,17 @@ public interface HEX4J {
                 return false;
             }
             return true;
+        }
+    }
+
+    public class Private {
+
+        public static String checkIntegrity(String hexValue) {
+            hexValue = hexValue.replaceAll("0x", "").replaceAll("0X", "").replaceAll(" ", "");
+            while (hexValue.length() % 2 != 0) {
+                hexValue = "0".concat(hexValue);
+            }
+            return hexValue;
         }
     }
 }
