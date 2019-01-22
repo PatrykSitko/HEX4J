@@ -10,11 +10,11 @@ A library written to simplify hexadecimal manipulation in Java(8).
          System.out.println(counter.getCount(increaseCount::boolean));
 ## 3.READING & WRITING* FILES:
 	(Reads file content as hexadecimals)
-        String fileContentInHexFormat = HEX4J.FileReader.read(sourceFile.txt);
+        String fileContentInHexFormat = HEX4J.FileReader.read(new File(sourceFile.txt));
         (*Does not write to file in hexadecimal format. Original file structure is kept.)
-        HEX4J.FileWriter.write(hexadecimalContent::String, destinationFile.txt::File);
+        HEX4J.FileWriter.write(hexadecimalContent::String, new File(destinationFile.txt));
         (This method writes the content in a structured way)
-        HEX4J.FileWriter.writeHumanReadableFormat(hexadecimalContent::String, destinationFile.txt::File);
+        HEX4J.FileWriter.writeHumanReadableFormat(hexadecimalContent::String, new File(destinationFile.txt));
 	Example:
 	000000000	00 48 69 2c 20 6d 79 20 6e 61 6d 65 20 69 73 20 	.Hi,.my.name.is.
 	000000010	50 61 74 72 79 6b 20 53 69 74 6b 6f 2e 20 49 20 	Patryk.Sitko..I.
