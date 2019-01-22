@@ -13,9 +13,15 @@ Examples:
 	- (Reads file content as hexadecimals)
         - String fileContentInHexFormat = HEX4J.FileReader.read(sourceFile.txt);
         - (*Does not write to file in hexadecimal format. Original file structure is kept.)
-        - (Broken:)HEX4J.FileWriter.write(hexadecimalContent::String, destinationFile.txt::File);
+        - HEX4J.FileWriter.write(hexadecimalContent::String, destinationFile.txt::File);
         - (This method writes the content in a structured way)
-        - (Broken:)HEX4J.FileWriter.writeHumanReadableFormat(hexadecimalContent::String, destinationFile.txt::File);
+        - HEX4J.FileWriter.writeHumanReadableFormat(hexadecimalContent::String, destinationFile.txt::File);
+	Example:
+	000000000	00 48 69 2c 20 6d 79 20 6e 61 6d 65 20 69 73 20 	.Hi,.my.name.is.
+	000000010	50 61 74 72 79 6b 20 53 69 74 6b 6f 2e 20 49 20 	Patryk.Sitko..I.
+	000000020	68 6f 70 65 20 74 68 61 74 20 49 20 68 61 76 65 	hope.that.I.have
+	000000030	20 68 65 6c 70 65 64 20 79 6f 75 2e 			.helped.you.
+	000000040
           
           
           
