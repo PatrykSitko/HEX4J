@@ -15,6 +15,7 @@ Examples:
           (Broken:)HEX4J.FileWriter.write(hexadecimalContent::String, destinationFile.txt::File);
           (This method writes the content in a structured way)
           (Broken:)HEX4J.FileWriter.writeHumanReadableFormat(hexadecimalContent::String, destinationFile.txt::File);
+          .
           
           
           
